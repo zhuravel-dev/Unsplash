@@ -1,4 +1,4 @@
-package com.example.unsplash
+package com.example.unsplash.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.unsplash.pickerandroid.photopicker.data.UnsplashPhoto
