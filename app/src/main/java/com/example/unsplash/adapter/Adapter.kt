@@ -1,9 +1,11 @@
 package com.example.unsplash.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.unsplash.DetailsClickListener
 import com.example.unsplash.R
 import com.example.unsplash.models.Results
 import com.unsplash.pickerandroid.photopicker.data.UnsplashPhoto
@@ -11,8 +13,14 @@ import com.unsplash.pickerandroid.photopicker.data.UnsplashPhoto
 
 class Adapter constructor(context: Context): RecyclerView.Adapter<ViewHolder>() {
 
-    private var mListOfPhotos : MutableList<Results>  = mutableListOf()
+    private var myListOfPhotos : MutableList<Results>  = mutableListOf()
 
+    var myclickLictener: DetailsClickListener? = null
+
+    fun setData(response: List<Results>){
+        myListOfPhotos.addAll(response)
+        notifyDataSetChanged()
+    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,10 +31,12 @@ class Adapter constructor(context: Context): RecyclerView.Adapter<ViewHolder>() 
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        Log.e("Adapter", "bind holder with position $position")
+        (holder as? ViewHolder)?.bind(myListOfPhotos[position], myclickLictener)
+
     }
 
 
-    override fun getItemCount(): Int = mListOfPhotos.size
+    override fun getItemCount(): Int = myListOfPhotos.size
 
 }
