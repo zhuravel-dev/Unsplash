@@ -23,18 +23,21 @@ class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val uiHandler = Handler(Looper.getMainLooper())
 
     fun bind(result: Results, clickListener: DetailsClickListener?){
-
         val imageView = itemView.findViewById<ImageView>(R.id.image)
 
         setImage(result.description, imageView)
+
+        itemView.setOnClickListener {
+            clickListener?.onClick(result)}
     }
+
 
     private fun setImage(link: String, imageView: ImageView){
         try{
             val url = URL(link)
             executor.submit{
                 val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
-                uiHandler.post { imageView.setImageBitmap(bmp)}
+                uiHandler.post { imageView.setImageBitmap(bmp) }
             }.get()
         } catch (ex: MalformedURLException) {
             Log.e(ViewHolder::class.java.simpleName, ex.localizedMessage.orEmpty())

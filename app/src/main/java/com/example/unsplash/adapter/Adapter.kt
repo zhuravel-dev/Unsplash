@@ -11,10 +11,9 @@ import com.example.unsplash.models.Results
 import com.unsplash.pickerandroid.photopicker.data.UnsplashPhoto
 
 
-class Adapter constructor(context: Context): RecyclerView.Adapter<ViewHolder>() {
+class Adapter : RecyclerView.Adapter<ViewHolder>() {
 
     private var myListOfPhotos : MutableList<Results>  = mutableListOf()
-
     var myclickLictener: DetailsClickListener? = null
 
     fun setData(response: List<Results>){
@@ -38,5 +37,4 @@ class Adapter constructor(context: Context): RecyclerView.Adapter<ViewHolder>() 
 
 
     override fun getItemCount(): Int = myListOfPhotos.size
-
 }

@@ -21,7 +21,7 @@ class MyViewModel: ViewModel() {
     private val _after = MutableLiveData<String>()
     val after: LiveData<String> = _after
 
-    fun getAllData() {
+    fun getAllData(count: Int, after: String? = null) {
         _showProgress.postValue(true)
         val service = RetrofitClientInstance.getRetrofit().create(Interface::class.java)
         val call: Call<Json4Kotlin_Base> = service.getContent()
