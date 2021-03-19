@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity(), DetailsClickListener{
     }
 
 
-
     fun setupRecyclerView(){
         val myRecyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         myRecyclerView.layoutManager = LinearLayoutManager(this)
