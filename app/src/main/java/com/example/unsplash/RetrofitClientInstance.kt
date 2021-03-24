@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClientInstance {
 
-    val baseUrl = "https://unsplash.com/s/photos/random-photo/"
+    val baseUrl = "https://api.unsplash.com/"
 
     fun getRetrofit () = Retrofit.Builder()
         .baseUrl(baseUrl)

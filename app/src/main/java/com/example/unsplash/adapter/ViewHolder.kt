@@ -1,5 +1,6 @@
 package com.example.unsplash.adapter
 
+import android.content.res.Resources
 import android.graphics.BitmapFactory
 import android.os.Handler
 import android.os.Looper
@@ -8,32 +9,39 @@ import android.view.View
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.unsplash.DetailsClickListener
-import com.example.unsplash.MyViewModel
 import com.example.unsplash.R
 import com.example.unsplash.models.Results
-import com.google.gson.internal.bind.TypeAdapters.URL
-import kotlinx.android.synthetic.main.item_photo.view.*
 import java.net.MalformedURLException
 import java.net.URL
 import java.util.concurrent.Executors
 
-class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
     private val executor = Executors.newSingleThreadExecutor()
     private val uiHandler = Handler(Looper.getMainLooper())
+    private val imageView: ImageView by lazy {
+        itemView.findViewById(R.id.image)
+    }
 
-    fun bind(result: Results, clickListener: DetailsClickListener?){
-        val imageView = itemView.findViewById<ImageView>(R.id.image)
+    init {
+        val displayMetrics = Resources.getSystem().displayMetrics
+        val displayWidthPx = displayMetrics.widthPixels
+        imageView.layoutParams = imageView.layoutParams.apply {
+            width = displayWidthPx
+            height = displayWidthPx
+        }
+    }
 
-        setImage(result.description, imageView)
-
+    fun bind(result: Results, clickListener: DetailsClickListener?) {
+        setImage(result.urls.thumb, imageView)
         itemView.setOnClickListener {
-            clickListener?.onClick(result)}
+            clickListener?.onClick(result)
+        }
     }
 
 
-    private fun setImage(link: String, imageView: ImageView){
-        try{
+    private fun setImage(link: String, imageView: ImageView) {
+        try {
             val url = URL(link)
             executor.submit{
                 val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
